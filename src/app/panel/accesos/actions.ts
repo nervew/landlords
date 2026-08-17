@@ -76,4 +76,3 @@ export async function retryEmailAction(formData: FormData): Promise<void> {
   scheduleEmailDelivery(outboxId);
   revalidatePath("/panel/accesos");
 }
-

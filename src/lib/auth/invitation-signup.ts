@@ -51,4 +51,3 @@ export async function isAuthorizedInvitationSignup(
     !invitation.existingUserId
   );
 }
-

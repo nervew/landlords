@@ -92,4 +92,3 @@ export function ResetPasswordForm({ token }: { token: string }) {
     </form>
   );
 }
-

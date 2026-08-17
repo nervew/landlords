@@ -74,4 +74,3 @@ export function passwordResetEmail(url: string) {
     ),
   };
 }
-

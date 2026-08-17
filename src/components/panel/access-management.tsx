@@ -159,4 +159,3 @@ function FieldError({ message }: { message?: string }) {
 function Empty({ text }: { text: string }) {
   return <p className="rounded-xl border border-dashed border-[var(--line)] p-6 text-sm text-[var(--muted)]">{text}</p>;
 }
-

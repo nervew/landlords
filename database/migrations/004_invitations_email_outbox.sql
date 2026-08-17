@@ -56,4 +56,3 @@ create index email_outbox_dispatch_idx
 
 create index email_outbox_recipient_idx
   on email_outbox (recipient, created_at desc);
-

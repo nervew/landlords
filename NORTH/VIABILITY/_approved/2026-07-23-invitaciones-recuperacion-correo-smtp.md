@@ -46,4 +46,3 @@ cuenta recupere su contraseña mediante correo transaccional.
 - **Decisión:** aprobar
 - **Fecha:** 2026-07-23
 - **Razón:** el usuario eligió SMTP genérico y PostgreSQL como fuente de verdad.
-
