@@ -19,10 +19,10 @@ export function Header() {
           </Link>
         </nav>
         <Link
-          href="/propiedades"
+          href="/iniciar-sesion"
           className="inline-flex min-h-11 items-center gap-2 rounded-full bg-[var(--forest)] px-4 text-sm font-bold text-white transition hover:bg-[var(--forest-2)]"
         >
-          Explorar
+          Administrar
           <ArrowUpRight aria-hidden="true" size={17} />
         </Link>
       </div>
