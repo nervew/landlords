@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { archivePropertyAction } from "./actions";
+import { submitPropertyAction } from "./submit-action";
 import { getCurrentActor } from "@/lib/auth/actor";
 import { listAgenciesForActor } from "@/lib/repositories/agencies";
 import { listManagedProperties } from "@/lib/repositories/properties";
@@ -107,6 +108,15 @@ export default async function PropertiesPanelPage({
                   </button>
                 </form>
               )}
+              {selectedAgency?.status !== "suspended" &&
+                ["draft", "rejected"].includes(property.status) && (
+                <form action={submitPropertyAction}>
+                  <input type="hidden" name="propertyId" value={property.id} />
+                  <button className="text-sm font-bold text-[#26734c] underline underline-offset-4">
+                    Enviar a publicación
+                  </button>
+                </form>
+                )}
             </div>
           </article>
         ))}
