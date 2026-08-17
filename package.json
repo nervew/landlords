@@ -1,0 +1,67 @@
+{
+  "name": "landlords",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Vitrina de lotes, fincas y terrenos en pueblos de Colombia",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "db:setup": "node scripts/db-setup.mjs",
+    "db:migrate": "node scripts/db-migrate.mjs",
+    "db:seed": "node --experimental-strip-types scripts/db-seed.mts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nervew/landlords.git"
+  },
+  "keywords": [
+    "inmobiliaria",
+    "terrenos",
+    "colombia"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nervew/landlords/issues"
+  },
+  "homepage": "https://github.com/nervew/landlords#readme",
+  "dependencies": {
+    "better-auth": "1.6.24",
+    "lucide-react": "^1.25.0",
+    "next": "^16.2.11",
+    "nodemailer": "^9.0.3",
+    "pg": "8.22.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "server-only": "0.0.1",
+    "sharp": "0.35.3",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@testing-library/jest-dom": "^7.0.0",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/node": "^24.13.3",
+    "@types/nodemailer": "^8.0.1",
+    "@types/pg": "^8.20.0",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.2.11",
+    "jsdom": "^29.1.1",
+    "postcss": "8.5.26",
+    "tailwindcss": "^4.3.3",
+    "typescript": "5.9",
+    "vitest": "^4.1.10"
+  },
+  "overrides": {
+    "postcss": "8.5.26",
+    "sharp": "0.35.3"
+  }
+}
