@@ -12,6 +12,15 @@ y las imágenes se almacenan en PostgreSQL.
 - Sharp para convertir imágenes a WebP antes de guardarlas como `bytea`.
 - Vitest y Testing Library.
 
+## Documentación
+
+- [Índice de documentación](docs/README.md)
+- [Guía de usuario](docs/guia-de-usuario.md)
+- [Arquitectura técnica](docs/arquitectura.md)
+- [Diagramas del sistema](docs/diagramas/README.md)
+- [Operación y despliegue](docs/operacion-y-despliegue.md)
+- [Limitaciones conocidas](docs/limitaciones-conocidas.md)
+
 ## Requisitos
 
 - Node.js 24.
