@@ -28,9 +28,13 @@
 - Recuperación, acceso administrativo e invitación inválida fueron validados en navegador sin errores.
 - GitFlow usa `main` para producción, `develop` para integración y prefijos estándar para ramas de trabajo.
 - El cierre de 2026-08-17 pasó lint, tipos, 29 pruebas locales, build de 20 rutas y auditoría con cero vulnerabilidades; 21 integraciones PostgreSQL quedaron omitidas sin `RUN_DB_TESTS=1`.
+- `docs/` cubre producto, usuarios, arquitectura, datos, seguridad, desarrollo, operación, rutas, trazabilidad y limitaciones.
+- Trece bloques Mermaid renderizan correctamente y los 22 documentos pasan enlaces y Markdownlint.
+- La edición de propiedades rechazadas contradice la restricción SQL al limpiar la razón sin volver a borrador; quedó como bloqueante antes de producción.
 
 ## Next
 
+- Corregir y probar el ciclo `rejected` → `draft` → reenvío.
 - Definir y ensayar respaldo y restauración de PostgreSQL, incluidos los binarios.
 - Rotar credenciales locales antes de cualquier exposición en red.
 - Elegir proveedor SMTP, verificar dominio remitente y ensayar entregabilidad real.
@@ -48,3 +52,4 @@
 - 2026-07-23: `SPEC005 a SPEC008 completados y verificados con 42 pruebas y flujos reales de panel.`
 - 2026-07-23: `SPEC009 completado con 50 pruebas, SMTP local controlado y flujos visibles validados.`
 - 2026-08-17: `GitFlow configurado y trabajo separado en commits de infraestructura, seguridad, SPECs y documentación.`
+- 2026-08-17: `Documentación técnica y de producto creada con diagramas Mermaid verificados y brechas explícitas.`

@@ -2,12 +2,13 @@
 
 ## 🔴 Critical
 
-<!-- Sin bloqueantes críticos registrados. -->
+- [2026-08-17] `Corregir la edición de propiedades rejected: mover a draft antes de limpiar rejection_reason y cubrir el reenvío con una integración PostgreSQL.`
 
 ## 🟡 Debt
 
 - [2026-07-23] `Definir retención, respaldo y restauración para una base que incluye imágenes bytea.`
 - [2026-07-23] `Separar credenciales y roles de migración, aplicación y respaldo en producción.`
+- [2026-08-17] `Diferenciar permisos efectivos entre membresías owner y editor.`
 
 ## 🟢 TODOs
 
