@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { CatalogClient } from "@/components/properties/catalog-client";
+import { listPublishedProperties } from "@/lib/repositories/public-content";
 import Loading from "./loading";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Lotes y terrenos en venta en Colombia",
@@ -18,7 +21,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function PropertiesPage() {
+export default async function PropertiesPage() {
+  const properties = await listPublishedProperties();
   return (
     <>
       <section className="bg-[var(--forest)] py-14 text-white md:py-20">
@@ -34,7 +38,7 @@ export default function PropertiesPage() {
         </div>
       </section>
       <Suspense fallback={<Loading />}>
-        <CatalogClient />
+        <CatalogClient properties={properties} />
       </Suspense>
     </>
   );

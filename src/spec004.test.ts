@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import robots from "@/app/robots";
-import sitemap from "@/app/sitemap";
+import { buildSitemap } from "@/app/sitemap";
 import { agencies } from "@/data/agencies";
 import { properties } from "@/data/properties";
 import {
@@ -14,7 +14,7 @@ import {
 
 describe("SPEC004: SEO, accesibilidad y calidad", () => {
   it("publica todas las rutas indexables sin duplicados", () => {
-    const entries = sitemap();
+    const entries = buildSitemap(properties, agencies);
     const urls = entries.map((entry) => entry.url);
 
     expect(entries).toHaveLength(2 + properties.length + agencies.length);

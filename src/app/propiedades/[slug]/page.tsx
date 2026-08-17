@@ -20,8 +20,6 @@ import { PropertyGallery } from "@/components/properties/property-gallery";
 import { InquiryForm } from "@/components/properties/inquiry-form";
 import { PropertyCard } from "@/components/properties/property-card";
 import { JsonLd } from "@/components/seo/json-ld";
-import { getAgencyById } from "@/data/agencies";
-import { getPropertyBySlug, properties } from "@/data/properties";
 import {
   formatArea,
   formatPrice,
@@ -31,20 +29,21 @@ import {
 import { getRelatedProperties } from "@/lib/properties";
 import { propertyJsonLd } from "@/lib/seo";
 import { createWhatsAppUrl } from "@/lib/whatsapp";
+import {
+  getPublicAgencyById,
+  getPublishedPropertyBySlug,
+  listPublishedProperties,
+} from "@/lib/repositories/public-content";
 
 interface PropertyPageProps {
   params: Promise<{ slug: string }>;
-}
-
-export function generateStaticParams() {
-  return properties.map((property) => ({ slug: property.slug }));
 }
 
 export async function generateMetadata({
   params,
 }: PropertyPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const property = getPropertyBySlug(slug);
+  const property = await getPublishedPropertyBySlug(slug);
 
   if (!property) return {};
 
@@ -67,17 +66,20 @@ export async function generateMetadata({
 
 export default async function PropertyPage({ params }: PropertyPageProps) {
   const { slug } = await params;
-  const property = getPropertyBySlug(slug);
+  const property = await getPublishedPropertyBySlug(slug);
   if (!property) notFound();
 
-  const agency = getAgencyById(property.agencyId);
+  const agency = await getPublicAgencyById(property.agencyId);
   if (!agency) notFound();
 
   const whatsappUrl = createWhatsAppUrl(
     agency.whatsapp,
     `Hola, me interesa ${property.title} en ${property.municipality}. Vi la propiedad en Raíz de Pueblo: https://raizdepueblo.demo/propiedades/${property.slug}`,
   );
-  const related = getRelatedProperties(property, properties);
+  const related = getRelatedProperties(
+    property,
+    await listPublishedProperties(),
+  );
 
   return (
     <>

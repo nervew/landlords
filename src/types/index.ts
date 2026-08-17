@@ -28,6 +28,7 @@ export interface Property {
   negotiable: boolean;
   publishedAt: string;
   agencyId: string;
+  agencyName?: string;
   highlights: string[];
   legalInfo: string[];
   latitude?: number;

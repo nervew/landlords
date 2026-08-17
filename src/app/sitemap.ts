@@ -1,9 +1,17 @@
 import type { MetadataRoute } from "next";
-import { agencies } from "@/data/agencies";
-import { properties } from "@/data/properties";
 import { absoluteUrl } from "@/lib/seo";
+import {
+  listPublicAgencies,
+  listPublishedProperties,
+} from "@/lib/repositories/public-content";
+import type { Agency, Property } from "@/types";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export const dynamic = "force-dynamic";
+
+export function buildSitemap(
+  properties: Property[],
+  agencies: Agency[],
+): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
     {
       url: absoluteUrl("/"),
@@ -34,4 +42,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }));
 
   return [...staticRoutes, ...propertyRoutes, ...agencyRoutes];
+}
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [properties, agencies] = await Promise.all([
+    listPublishedProperties(),
+    listPublicAgencies(),
+  ]);
+  return buildSitemap(properties, agencies);
 }

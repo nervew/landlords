@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, MapPin, Ruler } from "lucide-react";
 import type { Property } from "@/types";
-import { getAgencyById } from "@/data/agencies";
 import { formatArea, formatPrice, formatPropertyType } from "@/lib/format";
 
 interface PropertyCardProps {
@@ -11,8 +10,6 @@ interface PropertyCardProps {
 }
 
 export function PropertyCard({ property, priority = false }: PropertyCardProps) {
-  const agency = getAgencyById(property.agencyId);
-
   return (
     <article className="group overflow-hidden rounded-[1.4rem] border border-black/5 bg-white soft-shadow">
       <Link href={`/propiedades/${property.slug}`} className="relative block aspect-[4/3] overflow-hidden">
@@ -73,7 +70,7 @@ export function PropertyCard({ property, priority = false }: PropertyCardProps) 
             </p>
           </div>
           <p className="max-w-[130px] text-right text-xs leading-5 text-[var(--muted)]">
-            {agency?.name}
+            {property.agencyName}
           </p>
         </div>
       </div>

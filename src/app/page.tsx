@@ -13,7 +13,9 @@ import {
 } from "lucide-react";
 import { HomeSearch } from "@/components/home/home-search";
 import { PropertyCard } from "@/components/properties/property-card";
-import { properties } from "@/data/properties";
+import { listPublishedProperties } from "@/lib/repositories/public-content";
+
+export const dynamic = "force-dynamic";
 
 const popularMunicipalities = [
   { name: "Villa de Leyva", department: "Boyacá", image: "/images/villa-de-leyva.jpg", count: 14 },
@@ -40,7 +42,8 @@ const steps = [
   },
 ];
 
-export default function HomePage() {
+export default async function HomePage() {
+  const properties = await listPublishedProperties();
   const featuredProperties = properties.filter((property) => property.featured).slice(0, 3);
 
   return (

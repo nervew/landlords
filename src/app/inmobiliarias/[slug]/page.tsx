@@ -13,24 +13,22 @@ import {
 } from "lucide-react";
 import { PropertyCard } from "@/components/properties/property-card";
 import { JsonLd } from "@/components/seo/json-ld";
-import { agencies, getAgencyBySlug } from "@/data/agencies";
-import { properties } from "@/data/properties";
 import { createWhatsAppUrl } from "@/lib/whatsapp";
 import { agencyJsonLd } from "@/lib/seo";
+import {
+  getPublicAgencyBySlug,
+  listPublishedProperties,
+} from "@/lib/repositories/public-content";
 
 interface AgencyPageProps {
   params: Promise<{ slug: string }>;
-}
-
-export function generateStaticParams() {
-  return agencies.map((agency) => ({ slug: agency.slug }));
 }
 
 export async function generateMetadata({
   params,
 }: AgencyPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const agency = getAgencyBySlug(slug);
+  const agency = await getPublicAgencyBySlug(slug);
   if (!agency) return {};
 
   return {
@@ -51,9 +49,10 @@ export async function generateMetadata({
 
 export default async function AgencyPage({ params }: AgencyPageProps) {
   const { slug } = await params;
-  const agency = getAgencyBySlug(slug);
+  const agency = await getPublicAgencyBySlug(slug);
   if (!agency) notFound();
 
+  const properties = await listPublishedProperties();
   const inventory = properties.filter((property) => property.agencyId === agency.id);
   const whatsappUrl = createWhatsAppUrl(
     agency.whatsapp,

@@ -3,22 +3,33 @@
 import { useMemo, useTransition } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Search, SlidersHorizontal, X } from "lucide-react";
-import { properties } from "@/data/properties";
+import type { Property } from "@/types";
 import { filterProperties, filtersFromSearchParams } from "@/lib/property-filters";
 import { PropertyCard } from "./property-card";
 import { CatalogFilters } from "./catalog-filters";
 
-const departments = [...new Set(properties.map((property) => property.department))].sort();
-const municipalities = [...new Set(properties.map((property) => property.municipality))].sort();
-const uses = [...new Set(properties.flatMap((property) => property.intendedUse))].sort();
-
-export function CatalogClient() {
+export function CatalogClient({ properties }: { properties: Property[] }) {
+  const departments = useMemo(
+    () => [...new Set(properties.map((property) => property.department))].sort(),
+    [properties],
+  );
+  const municipalities = useMemo(
+    () => [...new Set(properties.map((property) => property.municipality))].sort(),
+    [properties],
+  );
+  const uses = useMemo(
+    () => [...new Set(properties.flatMap((property) => property.intendedUse))].sort(),
+    [properties],
+  );
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
   const filters = useMemo(() => filtersFromSearchParams(searchParams), [searchParams]);
-  const results = useMemo(() => filterProperties([...properties], filters), [filters]);
+  const results = useMemo(
+    () => filterProperties([...properties], filters),
+    [filters, properties],
+  );
 
   function updateParam(key: string, value: string) {
     const params = new URLSearchParams(searchParams.toString());
