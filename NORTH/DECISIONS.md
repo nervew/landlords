@@ -37,3 +37,57 @@
 - **Decisión:** Implementar navegación, búsqueda, filtros, perfiles, formulario demostrativo y enlaces de WhatsApp; excluir pagos, cuentas, panel de publicación y validación legal real.
 - **Consecuencias:** El MVP conserva un alcance entregable y reduce riesgos de seguridad y cumplimiento; a cambio, las inmobiliarias no podrán administrar inventario desde la aplicación.
 - **Alternativas consideradas:** Una plataforma transaccional completa se descarta por requerir procesos legales, seguridad y backend no definidos; un catálogo sin contacto se descarta porque no cumple el objetivo comercial.
+
+## ADR-004: Ampliar la vitrina con autogestión multi-inmobiliaria
+
+- **Fecha:** 2026-07-23
+- **Estado:** Aceptada; amplía ADR-003 después del cierre del MVP.
+- **Contexto:** El contenido está en fixtures y cada cambio requiere editar código. El usuario eligió que cada inmobiliaria administre su información.
+- **Decisión:** Añadir autenticación, panel, pertenencia por inmobiliaria, inventario y moderación sin convertir la plataforma en un sistema transaccional.
+- **Consecuencias:** El contenido será administrable, pero aparecen obligaciones de seguridad, persistencia, auditoría y operación.
+- **Alternativas consideradas:** CMS central y hoja de cálculo se descartan porque no ofrecen la autonomía elegida.
+
+## ADR-005: Usar PostgreSQL y SQL tradicional como única persistencia
+
+- **Fecha:** 2026-07-23
+- **Estado:** Aceptada
+- **Contexto:** El usuario dispone de PostgreSQL local y solicita almacenar allí todos los datos, incluidas las imágenes.
+- **Decisión:** Usar `pg`, migraciones SQL versionadas y columnas `bytea`; no introducir Prisma ni almacenamiento de objetos.
+- **Consecuencias:** El esquema y las consultas son explícitos y portables. Se requiere mantener SQL, límites de medios y copias de seguridad más grandes.
+- **Alternativas consideradas:** Prisma se descarta por ser una abstracción no requerida; almacenamiento externo se descarta porque rompería la fuente única solicitada.
+
+## ADR-006: Autenticar con Better Auth y autorizar cerca de los datos
+
+- **Fecha:** 2026-07-23
+- **Estado:** Aceptada
+- **Contexto:** Implementar contraseñas, sesiones y revocación desde cero aumenta riesgo sin diferenciar el producto.
+- **Decisión:** Usar Better Auth con PostgreSQL para identidad y sesiones. Centralizar autorización en la capa de acceso a datos y validar actor, rol y pertenencia en cada operación.
+- **Consecuencias:** Se evita criptografía propia y todas las sesiones permanecen en PostgreSQL; la seguridad depende también de consultas parametrizadas y pruebas negativas.
+- **Alternativas consideradas:** Autenticación artesanal se descarta por riesgo; proveedores externos se descartan porque añadirían otra fuente de datos.
+
+## ADR-007: Publicar mediante confianza progresiva
+
+- **Fecha:** 2026-07-23
+- **Estado:** Aceptada
+- **Contexto:** Publicación inmediata para toda agencia aumenta fraude; revisión perpetua limita autonomía.
+- **Decisión:** Agencias nuevas requieren moderación, verificadas publican directamente y suspendidas no pueden enviar. Solo administradores cambian confianza.
+- **Consecuencias:** Se equilibran velocidad y control, a cambio de una máquina de estados y auditoría obligatoria.
+- **Alternativas consideradas:** Revisión universal y publicación universal se descartan por sus extremos operativos.
+
+## ADR-008: Entregar correo mediante SMTP y una outbox PostgreSQL
+
+- **Fecha:** 2026-07-23
+- **Estado:** Aceptada
+- **Contexto:** Invitaciones y recuperación requieren entrega externa sin convertir al proveedor en fuente de verdad ni perder mensajes ante fallos transitorios.
+- **Decisión:** Persistir primero cada mensaje en `email_outbox` y entregarlo con SMTP mediante `nodemailer`; usar vista previa solo en desarrollo.
+- **Consecuencias:** El proveedor puede cambiarse mediante configuración y los reintentos son auditables. Los enlaces de un solo uso existen temporalmente en la outbox y deben expirar o redactarse tras la entrega.
+- **Alternativas consideradas:** Una API propietaria se descarta por acoplamiento; envío sin outbox se descarta por pérdida ante fallos; vista previa sin entrega se limita al desarrollo.
+
+## ADR-009: Adoptar GitFlow para integrar cambios
+
+- **Fecha:** 2026-08-17
+- **Estado:** Aceptada
+- **Contexto:** El repositorio necesita separar trabajo funcional, integración y producción antes de continuar acumulando cambios.
+- **Decisión:** Usar `main` como rama de producción, `develop` como rama de integración y los prefijos estándar `feature/`, `bugfix/`, `release/`, `hotfix/` y `support/`; los pull requests funcionales apuntan a `develop`.
+- **Consecuencias:** La intención de cada rama y destino queda explícita, pero las ramas de larga duración pueden acumular divergencia y requieren integración frecuente.
+- **Alternativas consideradas:** Desarrollo directo sobre `main` y trunk-based se descartan para este flujo porque no preservan la etapa de integración solicitada.
